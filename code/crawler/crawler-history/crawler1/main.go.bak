@@ -1,0 +1,83 @@
+package main
+
+import (
+	"fmt"
+	_ "io"
+	"io/ioutil"
+	"net/http"
+
+	"bufio"
+
+	"regexp"
+
+	"log"
+
+	"golang.org/x/net/html/charset"
+	"golang.org/x/text/encoding"
+	"golang.org/x/text/encoding/unicode"
+	"golang.org/x/text/transform"
+	_ "golang.org/x/text/transform"
+)
+
+func main() {
+	resp, err := http.Get("http://www.zhenai.com/zhenghun")
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		fmt.Println("error: status code", resp.StatusCode)
+		return
+	}
+
+	// 不做处理
+	//all, err := ioutil.ReadAll(resp.Body)
+
+	// 如果是<meta charset="GBK">编码的网页需要进行utf-8转换
+	//utf8Reader := transform.NewReader(resp.Body, simplifiedchinese.GBK.NewDecoder())
+
+	// 自动检测格式
+	reader := bufio.NewReader(resp.Body)
+	e := determineEncoding(reader)
+
+	utf8Reader := transform.NewReader(reader, e.NewDecoder())
+	all, err := ioutil.ReadAll(utf8Reader)
+
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("%s \n", all)
+	//printCityList(all)
+
+}
+
+// 打印城市列表
+func printCityList(contents []byte) {
+	compile := regexp.MustCompile(`<a href="(http://www.zhenai.com/zhenghun/[a-z0-9]+)" [^>]*>([^<]+)</a>`)
+	all := compile.FindAllSubmatch(contents, -1) // [][][]byte
+	for _, m := range all {
+		//for _,subM := range m {
+		//	fmt.Printf("%s ",subM)
+		//}
+		//fmt.Println()
+		fmt.Printf("city:%s url:%s \n", m[2], m[1])
+	}
+	fmt.Println("matches found :", len(all))
+}
+
+// 确定网页的编码
+func determineEncoding(reader *bufio.Reader) encoding.Encoding {
+	// 读取开头1024个字节，用于DetermineEncoding方法的鉴别编码格式
+	//peek是对bufio.Reader来说的，而非原始的reader，
+	// 对bufio.Reader而言是从头读
+	bytes, err := reader.Peek(1024)
+	if err != nil {
+		//panic(err)
+		log.Printf("Fetcher error:%v ", err)
+		return unicode.UTF8
+	}
+	e, _, _ := charset.DetermineEncoding(bytes, "")
+	return e
+}

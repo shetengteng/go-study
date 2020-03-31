@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="worker-starter.go" type="GoApplicationRunConfiguration" factoryName="Go Application">
+    <module name="learngo" />
+    <working_directory value="$PROJECT_DIR$" />
+    <go_parameters value="-i" />
+    <parameters value="--port=9001" />
+    <kind value="FILE" />
+    <filePath value="$PROJECT_DIR$/crawler_distributed/worker/server/worker-starter.go" />
+    <package value="learngo" />
+    <directory value="$PROJECT_DIR$" />
+    <method />
+  </configuration>
+</component>

@@ -1,0 +1,5 @@
+- 分布式爬虫
+- 启动顺序
+    - persist server main.go 用于存储到es的服务
+    - worker server worker-starter.go 启动worker服务
+    - 启动最外成main.go 启动爬虫engine
