@@ -5,6 +5,7 @@ import (
 	"os"
 )
 
+// 迷宫，广度优先算法得到最佳路径
 func main() {
 
 	// 注意读取的maze.in文件是LF换行，否则读取时会将\r\n转换为0 \n
@@ -30,11 +31,10 @@ func main() {
 		fmt.Println()
 	}
 
-
 	fmt.Println("--------------")
 	// 输出多少步可以走出，以及路线
 	routes := route(steps, start, end)
-	for i:= len(routes) - 1;i>=0;i--{
+	for i := len(routes) - 1; i >= 0; i-- {
 		fmt.Println(routes[i])
 	}
 
@@ -49,7 +49,7 @@ func route(steps [][]int, start point, end point) []point {
 		for _, dir := range dirs {
 			next := cur.add(dir)
 			val, ok := next.at(steps)
-			if !ok{
+			if !ok {
 				continue
 			}
 			if val == nextValue {

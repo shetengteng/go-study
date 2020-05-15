@@ -1,0 +1,2 @@
+- 查看go文件函数组成
+  - shift+ctrl+o
