@@ -10,7 +10,7 @@ func main() {
 	r := gin.Default()
 	r.GET("/param/:name/*action", func(context *gin.Context) {
 		name := context.Param("name")
-		action := context.Param("action") // /xxxx 需要去除/
+		action := context.Param("action") // 【/xxxx】 需要去除/
 		action = strings.Trim(action,"/")
 		context.String(http.StatusOK, "name is "+name+" ,action is "+action)
 	})

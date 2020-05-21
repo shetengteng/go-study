@@ -17,7 +17,7 @@ func main() {
 		var login Login
 		// 将request的body中的数据，自动按照json格式解析到结构体
 		if err := context.ShouldBindJSON(&login); err != nil {
-			// gin.H封装了生成json数据的工具
+			// gin.H封装了生成json数据的工具，H本质上是一个map
 			context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
