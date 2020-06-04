@@ -33,7 +33,7 @@ func downloadHandler(w http.ResponseWriter, req *http.Request, p httprouter.Para
 		return
 	}
 	// 给头部设置信息，用于解析文件，否则会通过头部的一部分字节信息分析结果
-	w.Header().Set("Content-Tyep", "video/mp4")
+	w.Header().Set("Content-Type", "video/mp4")
 	// 读取请求中的数据到本地
 	http.ServeContent(w, req, "", time.Now(), videoFile)
 
