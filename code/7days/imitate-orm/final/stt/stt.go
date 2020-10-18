@@ -60,11 +60,12 @@ func (e *Engine) Transaction(f TxFunc) (result interface{}, err error) {
 		return nil, err
 	}
 
+	// todo 重点
 	defer func() {
 		if p := recover(); p != nil {
 			// 执行过程中有异常
 			_ = s.Rollback()
-			panic(p)
+			panic(p) // 再次抛出该异常，给上层捕获 一般panic要与recover一起使用，如果只有panic，则程序会终止
 		} else if err != nil {
 			// 执行完成返回值有异常
 			_ = s.Rollback()

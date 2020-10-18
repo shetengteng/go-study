@@ -1,0 +1,2 @@
+[xorm] [info]  2020/10/17 19:24:15.316687 PING DATABASE sqlite3
+[xorm] [info]  2020/10/17 19:24:15.334639 [SQL] SELECT `id`, `name`, `salt`, `age`, `passwd`, `created`, `updated`, `extend` FROM `tbl_user` WHERE (extend->'$.Alias' = ?) LIMIT 1 [xx]
