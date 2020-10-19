@@ -1,0 +1,9 @@
+port: 8082
+version: 0.1.2
+
+mysql:
+  port: 88
+  username: s1
+  UserName: s2
+  user_name: s4
+  url: htpc://
