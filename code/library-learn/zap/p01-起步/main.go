@@ -8,6 +8,7 @@ import (
 func main() {
 
 	logger := zap.NewExample() // 适合测试的时候使用
+	zap.RegisterEncoder()
 	//logger = zap.NewDevelopment() // dev
 	//logger = zap.NewProduction() // prod
 	defer logger.Sync() // 底层api有缓存，使用logger.Sync是同步到文件中
@@ -21,5 +22,7 @@ func main() {
 	logger.Info("连接失败", zap.String("url", "www.xxx.com"), zap.Int("attempt", 11), zap.Duration("backoff", time.Second))
 	logger.Warn("连接失败", zap.String("url", "www.xxx.com"), zap.Int("attempt", 11), zap.Duration("backoff", time.Second))
 	logger.Error("连接失败", zap.String("url", "www.xxx.com"), zap.Int("attempt", 11), zap.Duration("backoff", time.Second))
+
+
 
 }
